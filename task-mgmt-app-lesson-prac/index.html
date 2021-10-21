@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+      integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic"
+      rel="stylesheet"
+    />
+  </head>
+  <body onload="loadInitialData()">
+    <div class="add__new__btn__modile__only">
+      <button
+        class="btn btn-primary float-right"
+        data-bs-toggle="modal"
+        data-bs-target="#addNewModal"
+      >
+        <i class="fas fa-plus mr-2"></i>Add new
+      </button>
+    </div>
+    <div
+      class="modal fade"
+      id="addNewModal"
+      tabindex="-1"
+      aria-labelledby="addNewModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addNewModalLabel">Add New Task</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form onsubmit="return false">
+              <div class="mb-3">
+                <label for="imageUrl" class="form-label">Image Url</label>
+                <input
+                  type="url"
+                  class="form-control"
+                  id="imageUrl"
+                  placeholder="http://example.com/image.png"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="taskTitle" class="form-label">Task Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="taskTitle"
+                  placeholder="Learn Web Dev"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Tags" class="form-label">Task Type</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="Tags"
+                  placeholder="Work.."
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="taskDescription" class="form-label"
+                  >Task Description</label
+                >
+                <textarea
+                  class="form-control"
+                  id="taskDescription"
+                  placeholder="http://example.com/image.png"
+                  rows="4"
+                  required
+                ></textarea>
+              </div>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                onclick="handlesubmit()"
+                data-bs-dismiss="modal"
+              >
+                Save changes
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="showTask"
+      tabindex="-1"
+      aria-labelledby="showTaskLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-body task__modal__body"></div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <h1 class="navbar-brand font-weight-700">
+          <a href="index.html">TaskY</a>
+        </h1>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html"><strong>home</strong></a>
+            </li>
+          </ul>
+          <button
+            class="btn btn-primary ml-auto"
+            data-bs-toggle="modal"
+            data-bs-target="#addNewModal"
+          >
+            <i class="fas fa-plus mr-2"></i>Add new
+          </button>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <section class="mt-4">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="input-group flex-nowrap shadow-lg">
+              <input
+                type="search"
+                class="form-control"
+                placeholder="Search Task"
+                aria-label="Search Task"
+                aria-describedby="addon-wrapping"
+                onchange="searchTask.apply(this, arguments)"
+              /><span class="input-group-text" id="addon-wrapping">
+                <i class="fas fa-search"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-4">
+        <div class="row task__contents"></div>
+      </section>
+    </div>
+    <script src="./scripts/index.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
